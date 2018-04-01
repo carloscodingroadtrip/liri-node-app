@@ -19,6 +19,7 @@
   "homepage": "https://github.com/molinacarlosdev/liri-node-app#readme",
   "dependencies": {
     "chalk": "^2.3.2",
+    "date-and-time": "^0.6.2",
     "dotenv": "^5.0.1",
     "node-spotify-api": "^1.0.7",
     "omdb-client": "^2.0.0",
