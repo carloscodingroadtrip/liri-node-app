@@ -1,2 +1,11 @@
-Command: todo ; is created at 04/01/2018 20:07:59
-Command: spotify I-Want-it-That-Way; is created at 04/01/2018 20:07:59
+> node liri todo with query = QUERY_NOT_NEEDED was logged at 04/01/2018 23:53:25. 
+> node liri spotify with query = I-Want-it-That-Way was logged at 04/01/2018 23:53:25. 
+> node liri spotify with query = Hotel-California was logged at 04/01/2018 23:54:02. 
+> node liri movie with query = Ice-Age was logged at 04/01/2018 23:54:19. 
+> node liri movie with query = Transformers was logged at 04/01/2018 23:54:27. 
+> node liri movie with query = Coco was logged at 04/01/2018 23:54:33. 
+> node liri movie with query = Jaws was logged at 04/01/2018 23:54:38. 
+> node liri spotify with query = New-York-New-york was logged at 04/01/2018 23:54:48. 
+> node liri spotify with query = New-York was logged at 04/01/2018 23:54:58. 
+> node liri spotify with query = Love-me-more was logged at 04/01/2018 23:55:09. 
+> node liri tweets with query = QUERY_NOT_NEEDED was logged at 04/01/2018 23:55:19. 

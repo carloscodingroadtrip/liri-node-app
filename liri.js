@@ -13,22 +13,21 @@ var client = new Twitter(keys.twitter);
 var now = new Date();
 var timeNow = date.format(now, 'MM/DD/YYYY HH:mm:ss');
 
-var command = process.argv[2];
-var query   = process.argv[3];
+console.clear(); //First thing, clear the console.
+//    [0]     [1]      [2]      [3 and all]
+let [path, filename, execute, ...queryWords] = process.argv; //destructuring with ES6
+var command = execute;                                       //get the command to execute from the CLI
+var query   = queryWords.join('-').trim();                   //get the query to use for our APIs
 
-console.clear();
-//Validation for the command being entered by the user
+//Validation the command being entered by the user
 if (command != undefined) {
      command = command.toLowerCase();
 }
 
-console.log(chalk.inverse('Ask LIRI any of the following: Tweets, Spotify, Movie, ToDo'));
-
-//Validate for spaces after our command
-if (process.argv[4] != undefined) {
-    console.log(chalk.bgRed('ERROR, MULTI-WORDS (Songs or Movie) HAVE TO BE SEPARATED BY DASH. ie: Home-alone, '));
-    process.exit();
-}
+console.log(chalk`{inverse      Application MENU : {bold Tweets | Spotify | Movie | ToDo     }}`);
+console.log(chalk`{inverse      ie: node liri tweets                                   }`);
+console.log(chalk`{inverse          node liri spotify {italic song_name}                        }`);
+console.log(chalk`{inverse          node liri movie {italic movie_name}                         }`);
 
 if ((command === "spotify" || command === "movie") && query == undefined ) {
     console.log(chalk.bgRed('ERROR, NO song or movie name was provided.'));
@@ -62,7 +61,7 @@ function executeCommand(command, query) {
 }
 
 function findTweets() {
-    console.log(chalk.blue("********* Searching Twitter ***********"))
+    console.log(chalk.bgBlue("\n********* Searching Twitter ***********"))
     // twitter GET request
     var params = {user_id: query};
     client.get('statuses/user_timeline', params, function(error, tweets, response) {
@@ -80,7 +79,7 @@ function findTweets() {
 }
 
 function findMovie() {
-    console.log(chalk.blue("********* Searching IMDB ***********"));
+    console.log(chalk.bgBlue("\n********* Searching IMDB ***********"));
     var params = {
         apiKey: 'bdd0edf1',
         title: query,
@@ -106,10 +105,10 @@ function findMovie() {
 function findSong(query) {
     spotify.search({ type: 'track', query: query, limit: 1 }, function (err, data) {
         if (err) {
-            return console.log('Error occurred: ' + chalk.red(err));
+            return console.log('\nError occurred: ' + chalk.red(err));
         }
         var tracks = data.tracks.items;
-        console.log(chalk.blue("********* Searching Spotify ***********"))
+        console.log(chalk.bgBlue("\n********* Searching Spotify ***********"))
         if (tracks[0].preview_url == null) tracks[0].preview_url = "No preview Available!";// some results returned with null
 
         console.log(`Track: ${tracks[0].name}
@@ -122,7 +121,7 @@ Track Preview: ${tracks[0].preview_url}`);
 
 function readFile() {
     fs.readFile("random.txt", "utf8", function(err, data) {
-        console.log(chalk.bgBlue("********* Reading File ***********"))
+        console.log(chalk.bgBlue("\n********* Reading File ***********"))
         console.log(`Your command is: ${data}`);
         var newCommand = data.split(","),
         newCommandName = newCommand[0],
@@ -136,10 +135,10 @@ function readFile() {
 }
 
 function writeLog(command, query) {
-    if (query == undefined) query = "";
-    let mylog = `Command: ${command} ${query}; is created at ${timeNow}\n`
+    query === "" ? query = 'QUERY_NOT_NEEDED' : query = query;
+    let mylog = `> node liri ${command} with query = ${query} was logged at ${timeNow}. \n`
     fs.appendFile('log.txt', mylog, function (err) {
         if (err) return err;
-        console.log(chalk.red('Command Saved!'));
+        console.log(chalk`{bold {bgGreen Command Saved!}}`);
      });
 }
